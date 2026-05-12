@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — PageTurn</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-icon">📚</span> PageTurn
+    </a>
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="cart.html" class="cart-link">
+        🛒 Cart
+        <span class="cart-badge" style="display:none">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+
+      <!-- LOGIN FORM (shown by default) -->
+      <div id="loginSection">
+        <h2>Welcome back</h2>
+        <p class="auth-subtitle">Sign in to your PageTurn account</p>
+
+        <div class="form-group">
+          <label class="form-label" for="loginUsername">Username</label>
+          <input
+            type="text"
+            id="loginUsername"
+            class="form-input"
+            placeholder="Enter your username"
+            autocomplete="username"
+          />
+          <span class="error-msg" id="loginUsernameErr"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <input
+            type="password"
+            id="loginPassword"
+            class="form-input"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+          />
+          <span class="error-msg" id="loginPasswordErr"></span>
+        </div>
+
+        <!-- Server error message -->
+        <div id="loginServerErr" style="color:var(--danger); font-size:.88rem; margin-bottom:1rem; display:none;"></div>
+
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="handleLogin()">
+          Sign In
+        </button>
+
+        <div class="auth-toggle">
+          Don't have an account?
+          <a onclick="toggleForms()">Create one →</a>
+        </div>
+      </div>
+
+      <!-- SIGNUP FORM (hidden by default) -->
+      <div id="signupSection" style="display:none;">
+        <h2>Create account</h2>
+        <p class="auth-subtitle">Join PageTurn and start reading</p>
+
+        <div class="form-group">
+          <label class="form-label" for="signupUsername">Username</label>
+          <input
+            type="text"
+            id="signupUsername"
+            class="form-input"
+            placeholder="Choose a username"
+            autocomplete="username"
+          />
+          <span class="error-msg" id="signupUsernameErr"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signupEmail">Email</label>
+          <input
+            type="email"
+            id="signupEmail"
+            class="form-input"
+            placeholder="your@email.com"
+            autocomplete="email"
+          />
+          <span class="error-msg" id="signupEmailErr"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signupPassword">Password</label>
+          <input
+            type="password"
+            id="signupPassword"
+            class="form-input"
+            placeholder="Create a password (min. 6 chars)"
+            autocomplete="new-password"
+          />
+          <span class="error-msg" id="signupPasswordErr"></span>
+        </div>
+
+        <div id="signupServerErr" style="color:var(--danger); font-size:.88rem; margin-bottom:1rem; display:none;"></div>
+
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="handleSignup()">
+          Create Account
+        </button>
+
+        <div class="auth-toggle">
+          Already have an account?
+          <a onclick="toggleForms()">Sign in →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

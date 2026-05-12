@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Confirmed — PageTurn</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .confetti-wrap {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0; overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      top: -12px;
+      border-radius: 2px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    .checkout-wrap { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-icon">📚</span> PageTurn
+    </a>
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="cart.html" class="cart-link">
+        🛒 Cart
+        <span class="cart-badge" style="display:none">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Confetti -->
+  <div class="confetti-wrap" id="confettiWrap"></div>
+
+  <!-- Success Card -->
+  <div class="checkout-wrap">
+    <div class="success-card">
+
+      <span class="success-icon">🎉</span>
+
+      <h2>Order Confirmed!</h2>
+      <p>Thank you for shopping with <strong>PageTurn</strong>.</p>
+      <p>Your books are on their way to you.</p>
+
+      <!-- Order ID -->
+      <div id="orderIdEl" class="order-id" style="display:none"></div>
+
+      <!-- Delivery address summary -->
+      <div class="delivery-info" id="deliveryInfoEl" style="display:none">
+        <h4>📦 Delivering to</h4>
+        <p id="deliveryAddressText"></p>
+        <p id="deliveryTimingText" style="margin-top:.4rem; font-weight:600; color:var(--forest);"></p>
+      </div>
+
+      <!-- Order meta -->
+      <div id="orderMetaEl" style="display:none; margin-bottom:1.8rem;">
+        <p style="font-size:.9rem; color:var(--text-light);" id="orderMetaText"></p>
+      </div>
+
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="index.html" class="btn btn-primary">🏠 Back to Home</a>
+        <a href="index.html" class="btn btn-outline">Browse More Books</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2024 <strong>PageTurn</strong> — Crafted with Spring Boot &amp; ❤️</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script>
+    const DELIVERY_LABELS = {
+      standard:  '5–7 business days',
+      express:   '2–3 business days',
+      overnight: 'Next business day',
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const raw = sessionStorage.getItem('lastOrder');
+
+      if (raw) {
+        const order = JSON.parse(raw);
+        sessionStorage.removeItem('lastOrder');
+
+        // Order ID
+        const orderIdEl = document.getElementById('orderIdEl');
+        orderIdEl.textContent = `Order ID: ${order.orderId}`;
+        orderIdEl.style.display = 'inline-block';
+
+        // Delivery address block
+        if (order.address) {
+          const a = order.address;
+          const line2 = a.line2 ? `, ${a.line2}` : '';
+          document.getElementById('deliveryAddressText').textContent =
+            `${a.name} · ${a.phone}\n${a.line1}${line2}, ${a.city}, ${a.state} – ${a.pincode}`;
+          document.getElementById('deliveryTimingText').textContent =
+            `📅 Expected delivery: ${DELIVERY_LABELS[order.deliveryType] || '5–7 business days'}`;
+          document.getElementById('deliveryInfoEl').style.display = 'block';
+        }
+
+        // Meta: item count + total
+        const metaEl = document.getElementById('orderMetaEl');
+        if (order.itemCount || order.totalAmount) {
+          document.getElementById('orderMetaText').textContent =
+            `${order.itemCount} item(s)  ·  Total paid: $${parseFloat(order.totalAmount).toFixed(2)}`;
+          metaEl.style.display = 'block';
+        }
+      }
+
+      launchConfetti();
+    });
+
+    function launchConfetti() {
+      const wrap   = document.getElementById('confettiWrap');
+      const colors = ['#2d6a4f', '#1c1c1e', '#b5882a', '#d4a843', '#40916c', '#d8f3dc'];
+
+      for (let i = 0; i < 90; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-piece';
+        p.style.left             = Math.random() * 100 + 'vw';
+        p.style.background       = colors[Math.floor(Math.random() * colors.length)];
+        p.style.width            = (Math.random() * 9 + 6) + 'px';
+        p.style.height           = (Math.random() * 9 + 6) + 'px';
+        p.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+        p.style.animationDelay   = (Math.random() * 1.8) + 's';
+        p.style.borderRadius     = Math.random() > 0.5 ? '50%' : '2px';
+        wrap.appendChild(p);
+      }
+
+      setTimeout(() => wrap.innerHTML = '', 6000);
+    }
+  </script>
+</body>
+</html>

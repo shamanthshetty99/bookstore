@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PageTurn — Premium Online Bookstore</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-icon">📚</span> PageTurn
+    </a>
+    <div class="navbar-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="cart.html" class="cart-link">
+        🛒 Cart
+        <span class="cart-badge" style="display:none">0</span>
+      </a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">✦ Free shipping on orders over $35</div>
+      <h1>Discover your next<br><em>great story.</em></h1>
+      <p>Thousands of titles hand-curated across every genre — from timeless classics to modern must-reads.</p>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search by title or author…"
+          autocomplete="off"
+        />
+        <button class="search-btn" onclick="handleSearch()">
+          🔍 Search
+        </button>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <span class="hero-stat-num">8+</span>
+          <span class="hero-stat-label">Curated Titles</span>
+        </div>
+        <div>
+          <span class="hero-stat-num">6</span>
+          <span class="hero-stat-label">Genres</span>
+        </div>
+        <div>
+          <span class="hero-stat-num">4.7★</span>
+          <span class="hero-stat-label">Avg Rating</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOOKS SECTION ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title" id="sectionTitle">All Books</h2>
+        <p class="section-subtitle" id="bookCount"></p>
+      </div>
+      <button class="btn btn-outline" onclick="loadAllBooks()" id="clearSearchBtn" style="display:none; font-size:.82rem; padding:.55rem 1.2rem;">
+        ✕ Clear Search
+      </button>
+    </div>
+
+    <!-- Genre Pills -->
+    <div class="genre-filters" id="genreFilters">
+      <button class="genre-pill active" onclick="filterByGenre(null, this)">All</button>
+      <button class="genre-pill" onclick="filterByGenre('Classic Fiction', this)">Classic Fiction</button>
+      <button class="genre-pill" onclick="filterByGenre('Science Fiction', this)">Sci-Fi</button>
+      <button class="genre-pill" onclick="filterByGenre('Fantasy', this)">Fantasy</button>
+      <button class="genre-pill" onclick="filterByGenre('Mystery', this)">Mystery</button>
+      <button class="genre-pill" onclick="filterByGenre('Self-Help', this)">Self-Help</button>
+      <button class="genre-pill" onclick="filterByGenre('Philosophy', this)">Philosophy</button>
+    </div>
+
+    <!-- Books Grid -->
+    <div id="booksContainer">
+      <div class="spinner-wrap"><div class="spinner"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>© 2024 <strong>PageTurn</strong> — Crafted with Spring Boot &amp; ❤️</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
